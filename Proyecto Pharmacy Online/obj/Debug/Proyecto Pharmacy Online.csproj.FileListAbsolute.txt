@@ -1,0 +1,7 @@
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\bin\Proyecto Pharmacy Online.dll.config
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\bin\Proyecto Pharmacy Online.dll
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\bin\Proyecto Pharmacy Online.pdb
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\obj\Debug\Proyecto Pharmacy Online.csprojAssemblyReference.cache
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\obj\Debug\Proyecto Pharmacy Online.csproj.CoreCompileInputs.cache
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\obj\Debug\Proyecto Pharmacy Online.dll
+C:\Users\juand\source\repos\Proyecto Pharmacy Online\Proyecto Pharmacy Online\obj\Debug\Proyecto Pharmacy Online.pdb
