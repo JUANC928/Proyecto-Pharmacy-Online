@@ -1,0 +1,48 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPrincipal.Master.cs" Inherits="Proyecto_Pharmacy_Online.Masterpage.Site2" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Pharmacy Online</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Css/StyleSheet1.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="col-lg-12 m-0 p-0">
+            <!--Cabecera de la Pag-->
+            <div class="bg-success text-light text-center m-0 p-0 fijado-arriba-master">
+                <div class="row">
+                    <!--separador centrar titulo-->
+                    <div class="col-lg-2 col-sm-1"></div>
+                    <!--Titulo de la pagina-->
+                    <div class="col-lg-8 col-sm-7 pt-3">
+                        <p class="empresa m-0 p-0">Pharmacy Online</p>
+                    </div>
+                    <!--Boton Cerrar Sesion-->
+                    <div class="col-lg-2 col-sm-4 ml-0 pl-0">
+                        <asp:Button ID="Button1" runat="server" Text="Cerrar Sesion" CssClass="btn btn-info btn-cerrar" OnClick="Button1_Click" />
+
+                    </div>
+                </div>
+            </div>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+
+            <div class="col-lg-12 bg-dark ">
+                <div class="container text-center mb-0 py-3 text-light">
+                    <p class="mb-0 parrafo-informacion">Drogeria Online para el servicio de todos</p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="../bootstrap-4.0.0-dist/js/popper.min.js"></script>
+    <script src="../bootstrap-4.0.0-dist/js/jquery-3.6.0.min.js"></script>
+    <script src="../bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

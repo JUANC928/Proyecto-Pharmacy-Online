@@ -71,7 +71,13 @@
     <Content Include="bootstrap-4.0.0-dist\js\jquery-3.6.0.min.js" />
     <Content Include="bootstrap-4.0.0-dist\js\popper.min.js" />
     <Content Include="Css\StyleSheet1.css" />
-    <Content Include="Masterpage\Masterp1.Master" />
+    <Content Include="imagenes\certificado.png" />
+    <Content Include="imagenes\drogeria.jpg" />
+    <Content Include="imagenes\farmacia %281%29.png" />
+    <Content Include="imagenes\integridad.png" />
+    <Content Include="imagenes\logo.png" />
+    <Content Include="imagenes\doctore.png" />
+    <Content Include="imagenes\medicine.png" />
     <Content Include="bootstrap-4.0.0-dist\css\bootstrap-grid.css.map" />
     <Content Include="bootstrap-4.0.0-dist\css\bootstrap-grid.min.css.map" />
     <Content Include="bootstrap-4.0.0-dist\css\bootstrap-reboot.css.map" />
@@ -82,6 +88,9 @@
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.bundle.min.js.map" />
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.js.map" />
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.min.js.map" />
+    <Content Include="imagenes\responsabilidad.png" />
+    <Content Include="Masterpage\MasterPrincipal.Master" />
+    <Content Include="Masterpage\masterEntrada.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -90,23 +99,46 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Modulos\WebForm1.aspx" />
+    <Content Include="Modulos\Inicio.aspx" />
+    <Content Include="Modulos\Principal.aspx" />
+    <Content Include="Modulos\Entrada.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Masterpage\Masterp1.Master.cs">
-      <DependentUpon>Masterp1.Master</DependentUpon>
+    <Compile Include="Masterpage\masterEntrada.Master.cs">
+      <DependentUpon>masterEntrada.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Masterpage\Masterp1.Master.designer.cs">
-      <DependentUpon>Masterp1.Master</DependentUpon>
+    <Compile Include="Masterpage\masterEntrada.Master.designer.cs">
+      <DependentUpon>masterEntrada.Master</DependentUpon>
     </Compile>
-    <Compile Include="Modulos\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="Masterpage\MasterPrincipal.Master.cs">
+      <DependentUpon>MasterPrincipal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Modulos\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="Masterpage\MasterPrincipal.Master.designer.cs">
+      <DependentUpon>MasterPrincipal.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modulos\Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Principal.aspx.cs">
+      <DependentUpon>Principal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modulos\Principal.aspx.designer.cs">
+      <DependentUpon>Principal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Entrada.aspx.cs">
+      <DependentUpon>Entrada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modulos\Entrada.aspx.designer.cs">
+      <DependentUpon>Entrada.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
