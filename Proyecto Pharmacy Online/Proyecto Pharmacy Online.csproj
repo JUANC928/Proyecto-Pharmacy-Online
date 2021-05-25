@@ -89,6 +89,7 @@
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.js.map" />
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.min.js.map" />
     <Content Include="imagenes\responsabilidad.png" />
+    <Content Include="JavaScript\JavaScript.js" />
     <Content Include="Masterpage\MasterPrincipal.Master" />
     <Content Include="Masterpage\masterEntrada.Master" />
     <None Include="Web.Debug.config">

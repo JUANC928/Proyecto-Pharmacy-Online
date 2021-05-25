@@ -41,8 +41,8 @@
             </div>
         </div>
     </form>
-    <script src="../bootstrap-4.0.0-dist/js/popper.min.js"></script>
     <script src="../bootstrap-4.0.0-dist/js/jquery-3.6.0.min.js"></script>
     <script src="../bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script src="../bootstrap-4.0.0-dist/js/popper.min.js"></script>
 </body>
 </html>

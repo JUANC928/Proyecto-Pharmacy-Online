@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
 namespace Proyecto_Pharmacy_Online.Modulos
 {
     public partial class WebForm1 : System.Web.UI.Page
@@ -33,13 +37,30 @@ namespace Proyecto_Pharmacy_Online.Modulos
         protected void BtnIniciar_Click(object sender, EventArgs e)
         {
             Session["usuario"] = txtUsuario.Text;
-            Session["contraseña"] = txtContraseña;
 
-            if (Session["usuario"].Equals("juanc"))
+            string strUsuario, strContraseña;
+
+            strUsuario = txtUsuario.Text;
+            strContraseña = txtContraseña.Text;
+
+            var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var sqlQuery = "SELECT * from[dbo].[USUARIOS] where usuario = '" + strUsuario + "' And contraseña = '" + strContraseña + "'";
+
+            var cmd = new SqlCommand(sqlQuery, sqlcon);
+            var ds = new DataSet();
+            var da = new SqlDataAdapter(cmd);
+
+            sqlcon.Open();
+            da.Fill(ds, "USUARIOS");
+            sqlcon.Close();
+
+
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 Response.Redirect("../Modulos/Principal.aspx");
             }
         }
+
         /// <summary>
         /// Metodo ejecutado al presionar el boton de Registar
         /// un usuario nuevo, guarda los dtos de los campos de texto
@@ -57,7 +78,44 @@ namespace Proyecto_Pharmacy_Online.Modulos
             Session["correo"] = txtUsuario.Text;
             Session["usuario"] = tbUsuario;
             Session["contraseña"] = tbContraseña.Text;
-            MultiView1.ActiveViewIndex = 0;
+
+
+
+            string strNombre, strApellido, strTelefono, strDireccion, strEmail, strUsuario, strContraseña, strRepContraseña;
+
+            strNombre = tbNombre.Text;
+            strApellido = tbApellidos.Text;
+            strTelefono = tbTelefono.Text;
+            strDireccion = tbDireccion.Text;
+            strEmail = tbCorreo.Text;
+            strUsuario = tbUsuario.Text;
+            strContraseña = tbContraseña.Text;
+            strRepContraseña = tbRepContraseña.Text;
+
+
+            if (strContraseña.Equals(strRepContraseña))
+            {
+                var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+                var sqlQuery = "INSERT INTO [dbo].[Usuarios]" +
+                                "([nombre],[apellido],[telefono]" +
+                                ",[direccion],[correo],[usuario],[contraseña],[Usuarioid])" +
+                                "VALUES('" + strNombre + "','" + strApellido + "','" + strTelefono + "','" +
+                                strDireccion + "','" + strEmail + "','" + strUsuario + "','" + strContraseña + "',NEWID())";
+
+                var cmd = new SqlCommand(sqlQuery, sqlcon);
+                sqlcon.Open();
+                cmd.ExecuteNonQuery();
+                sqlcon.Close();
+
+                Response.Redirect("../Modulos/Principal.aspx");
+            }
+            else
+            {
+                tbRepContraseña.Text = string.Empty;
+                tbContraseña.Text = string.Empty;
+            }
+
+
         }
         #endregion
     }
