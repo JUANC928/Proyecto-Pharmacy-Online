@@ -1,42 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.IO;
 using System.Threading;
+using System.Web.UI.WebControls;
 
 namespace Proyecto_Pharmacy_Online.Modulos
 {
     public partial class WebForm3 : System.Web.UI.Page
     {
+        int carrito;
+        //int noHistorial = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string a;
             if (!IsPostBack) MultiView1.ActiveViewIndex = 0;
-            if (Session["usuario"].Equals("admin"))
+            try
             {
-                MultiView2.ActiveViewIndex = 1;
+                if (Session["usuario"] == null)
+                {
+                    Response.Redirect("../Modulos/Entrada.aspx");
+                }
+                if (Session["usuario"].Equals("admin"))
+                {
+                    MultiView2.ActiveViewIndex = 1;
+                }
+                else
+                {
+                    MultiView2.ActiveViewIndex = 0;
+                    MostrarProductos();
+                }
             }
-            else
+            catch (Exception)
             {
-                MultiView2.ActiveViewIndex = 0;
+                Console.WriteLine("Tiempo exedido su session se cerro");
             }
+
+            //captura el idUsuario del usuario que inicia session
             CapVariablesSession();
+            //CapNumeroCarrito();
         }
 
         protected void BtnProductos_Click(object sender, EventArgs e)
         {
             MultiView1.ActiveViewIndex = 0;
+            //CapNumeroCarrito();
+            //AumentarCarrito();
+            //Response.Write(carrito.ToString());
+            //MostrarProductos();
         }
         protected void BtnCarrito_Click(object sender, EventArgs e)
         {
             MultiView1.ActiveViewIndex = 1;
+            MostrarCarrito();
         }
         protected void BtnUsuario_Click(object sender, EventArgs e)
         {
@@ -48,7 +64,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
             else
             {
                 MultiView3.ActiveViewIndex = 0;
-                ///MostrarPQR();
+                //MostrarPQR();
             }
             MostrarInfoUsuario();
 
@@ -62,10 +78,11 @@ namespace Proyecto_Pharmacy_Online.Modulos
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void btnBuscar_Click(object sender, EventArgs e)
+        /// 
+        private void MostrarProductos()
         {
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var strSQL = "SELECT* FROM [dbo].[PRODUCTOS]";
+            var strSQL = "SELECT * FROM [dbo].[PRODUCTOS]";
             var cmd = new SqlCommand(strSQL, SqlConn);
 
             var ds = new DataSet();
@@ -77,6 +94,70 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
             DataList1.DataSource = ds;
             DataList1.DataBind();
+        }
+        /// <summary>
+        /// Metodo encargado de realizar la busqueda de los productos en la base de ddatos 
+        /// y mostrarlos en un datalist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string categoria;
+            string busqueda = txtBusquedaProductos.Text;
+
+            var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+
+            var strSQL = "";
+
+            //if (busqueda.Equals(""))
+            //{
+            //    strSQL = "SELECT * FROM [dbo].[PRODUCTOS]";
+            //}
+            if (rbSinCategoria.Checked && busqueda.Equals(""))
+            {
+                strSQL = "SELECT * FROM [dbo].[PRODUCTOS]";
+            }
+            if (rbVentaLibre.Checked && busqueda.Equals(""))
+            {
+                categoria = "Venta Libre";
+                strSQL = "SELECT * FROM [dbo].[PRODUCTOS] Where Categoria = '" + categoria + "'";
+            }
+            if (rbPrescripcion.Checked && busqueda.Equals(""))
+            {
+                categoria = "Prescripcion";
+                strSQL = "SELECT * FROM [dbo].[PRODUCTOS] Where Categoria = '" + categoria + "'";
+            }
+            if (rbPrescripcion.Checked && !busqueda.Equals(""))
+            {
+                categoria = "Prescripcion";
+                strSQL = "SELECT * FROM [dbo].[PRODUCTOS] Where NombreP = '" + busqueda + "' and Categoria = '" + categoria + "'";
+            }
+            if (rbVentaLibre.Checked && !busqueda.Equals(""))
+            {
+                categoria = "Venta Libre";
+                strSQL = "SELECT * FROM [dbo].[PRODUCTOS] Where NombreP = '" + busqueda + "' and Categoria = '" + categoria + "'";
+            }
+
+            var cmd = new SqlCommand(strSQL, SqlConn);
+            var ds = new DataSet();
+            var da = new SqlDataAdapter(cmd);
+
+            SqlConn.Open();
+            try
+            {
+                da.Fill(ds, "Productos");
+            }
+            catch (Exception)
+            {
+
+            }
+            SqlConn.Close();
+
+            DataList1.DataSource = ds;
+            DataList1.DataBind();
+
+            txtBusquedaProductos.Text = "";
         }
         /// <summary>
         /// Metodo encargado de subir un nuevo producto a la base de datos
@@ -103,7 +184,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
                 categoria = "Venta Libre";
             }
             string imgfile = Path.GetFileName(FileUploadImagen.PostedFile.FileName);
-            FileUploadImagen.SaveAs("C:/Users/juand/source/repos/Proyecto Pharmacy Online/Proyecto Pharmacy Online/imagenes/" + imgfile);
+            FileUploadImagen.SaveAs("C: /Users/juand/source/repos/Proyecto Pharmacy Online/Proyecto Pharmacy Online/imagenes/ " + imgfile);
             string url = "~/imagenes/" + imgfile;
             imgVistaPrevia.ImageUrl = url;
 
@@ -115,14 +196,11 @@ namespace Proyecto_Pharmacy_Online.Modulos
             cmd.ExecuteNonQuery();
             SqlConn.Close();
 
-            Thread.Sleep(2500);
             txtNombreProducto.Text = "";
             txtDescripcion.Text = "";
             txtPrecio.Text = "";
             txtCantidad.Text = "";
-            imgVistaPrevia.ImageUrl = "";
         }
-
         /// <summary>
         /// Metodo encargado de llenar un gridview con la info del usuario con
         /// el que se inicio sesion
@@ -144,7 +222,6 @@ namespace Proyecto_Pharmacy_Online.Modulos
             gvInfoUsuario.DataSource = ds;
             gvInfoUsuario.DataBind();
         }
-
         /// <summary>
         /// metodo encargado de mostrar las pqr realizadas por el usurio con el que
         /// se inicio sesion
@@ -152,9 +229,9 @@ namespace Proyecto_Pharmacy_Online.Modulos
         private void MostrarPQR()
         {
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            string id = Session["IdUsuario"].ToString();
+            string id = Session["idUsuario"].ToString();
 
-            var strSQL = "SELECT * from [dbo].[PQR] where KF_Usuarioid = '" + Session["IdUsuario"] + "'";
+            var strSQL = "SELECT * from [dbo].[PQR] where KF_Usuarioid = '" + Session["idUsuario"] + "'";
             var cmd = new SqlCommand(strSQL, SqlConn);
             var ds = new DataSet();
             var da = new SqlDataAdapter(cmd);
@@ -166,7 +243,6 @@ namespace Proyecto_Pharmacy_Online.Modulos
             gvVerPQR.DataSource = ds;
             gvVerPQR.DataBind();
         }
-
         /// <summary>
         /// metodo encargado de obtener y almacenar en una variable de sesion 
         /// el idUsuario del ususario con el que se inicio sesion
@@ -185,22 +261,33 @@ namespace Proyecto_Pharmacy_Online.Modulos
             sqlcon.Close();
 
         }
-
+        /// <summary>
+        /// metodo que le permite l administrador buscar las pqr por nombre el usuario que la
+        /// genero
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void BtnBuscarPQR_Click(object sender, EventArgs e)
         {
             var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
             string U_busquedaPQR = txtBuscarPQR.Text;
-
             var sqlQuery = "Select Usuarioid from [dbo].[USUARIOS] where usuario = '" + U_busquedaPQR + "'";
-
             var cmd = new SqlCommand(sqlQuery, sqlcon);
             sqlcon.Open();
             string usuarioPQR = Convert.ToString(cmd.ExecuteScalar());
-
             cmd.ExecuteNonQuery();
             sqlcon.Close();
 
-            var strSQL = "SELECT * from [dbo].[PQR] where KF_Usuarioid = '" + usuarioPQR + "'";
+            var strSQL = "";
+
+            if (U_busquedaPQR.Equals(""))
+            {
+                strSQL = "SELECT * from [dbo].[PQR]";
+            }
+            if (!U_busquedaPQR.Equals(""))
+            {
+                strSQL = "SELECT * from [dbo].[PQR] INNER JOIN  [dbo].[USUARIOS] ON  PQR.KF_Usuarioid = USUARIOS.Usuarioid where Usuarioid = '" + usuarioPQR + "'";
+            }
             cmd = new SqlCommand(strSQL, sqlcon);
             var ds = new DataSet();
             var da = new SqlDataAdapter(cmd);
@@ -212,12 +299,194 @@ namespace Proyecto_Pharmacy_Online.Modulos
             }
             catch (Exception)
             {
-                
+
             }
             sqlcon.Close();
 
             gvBuscarPQR.DataSource = ds;
             gvBuscarPQR.DataBind();
+        }
+        /// <summary>
+        /// Metodo encargado de capturar la info de un producto
+        /// y añadirlo a la base de datos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void BtnSubirPQR_Click(object sender, EventArgs e)
+        {
+            string MotivoPQR = txtNombrePqr.Text;
+            string descripcionPQR = txtDescripcionPQR.Text;
+
+            var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var strSQL = "INSERT INTO [dbo].[PQR] VALUES (NEWID(),'" + MotivoPQR + "','" + descripcionPQR + "','" + Session["IdUsuario"].ToString() + "')";
+            var cmd = new SqlCommand(strSQL, SqlConn);
+
+            SqlConn.Open();
+            cmd.ExecuteNonQuery();
+            SqlConn.Close();
+
+            Thread.Sleep(1000);
+            txtDescripcionPQR.Text = "";
+            txtNombrePqr.Text = "";
+        }
+
+        /// <summary>
+        /// Metodo encargado de capturar la informacion de que producto y que cantidad añadir al carrrito
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void BtnAñadiralCarrito_Click(object sender, EventArgs e)
+        {
+            Button agregar = (Button)sender;
+            DataListItem fila = (DataListItem)agregar.Parent;
+
+            Label nombreP = (Label)fila.Controls[4];
+            Label precio = (Label)fila.Controls[13];
+            TextBox cantidad = (TextBox)fila.Controls[22];
+            //Response.Write(cantidad.Text);
+
+            double precioT = double.Parse(precio.Text) * int.Parse(cantidad.Text);
+
+
+            var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var sqlQuery = "Select Productoid from [dbo].[PRODUCTOS] where nombreP = '" + nombreP.Text + "'";
+
+            var cmd = new SqlCommand(sqlQuery, sqlcon);
+            sqlcon.Open();
+            Session["productoid"] = Convert.ToString(cmd.ExecuteScalar());
+            cmd.ExecuteNonQuery();
+            sqlcon.Close();
+
+            var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var strSQL = "INSERT INTO [dbo].[CARRITOS] VALUES (NEWID(),'" + cantidad.Text + "','" + precioT + "','" + carrito + "','" + Session["productoid"].ToString() + "','" + Session["Idusuario"].ToString() + "')";
+            cmd = new SqlCommand(strSQL, SqlConn);
+
+            SqlConn.Open();
+            cmd.ExecuteNonQuery();
+            SqlConn.Close();
+        }
+
+
+        /// <summary>
+        /// Metodo encargado de restar en uno el contador de productos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void BtnEliminarProducto_Click(object sender, EventArgs e)
+        {
+            Button agregar = (Button)sender;
+            DataListItem fila = (DataListItem)agregar.Parent;
+
+            TextBox cantidadP = (TextBox)fila.Controls[22];
+
+            string a = cantidadP.Text;
+            int cantidad = 0;
+            if (a.Equals("")) cantidadP.Text = "0";
+
+            cantidad = int.Parse(cantidadP.Text);
+            cantidad--;
+            cantidadP.Text = cantidad + "";
+            string x = cantidadP.Text;
+
+        }
+        /// <summary>
+        /// Metodo encargado de sumar en uno el contador de productos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void BtnAñadirProducto_Click(object sender, EventArgs e)
+        {
+            string a = DataList1.SelectedItem.FindControl("txtCantidad").ToString();
+            int cantidad = 0;
+            if (a.Equals("")) txtBusquedaProductos.Text = "0";
+
+            cantidad = int.Parse(txtBusquedaProductos.Text);
+            cantidad++;
+            txtBusquedaProductos.Text = cantidad + "";
+        }
+
+        private void MostrarCarrito()
+        {
+            var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            string id = Session["idUsuario"].ToString();
+
+            var strSQL = "SELECT * FROM (([dbo].[CARRITOS] INNER JOIN [dbo].[PRODUCTOS] ON CARRITOS.KF_Productosid = PRODUCTOS.Productoid) INNER JOIN [dbo].[USUARIOS] ON CARRITOS.KF_Usuarioid = USUARIOS.Usuarioid) where KF_Usuarioid = '" + Session["IdUsuario"] + "' AND NoCarrito = '" + carrito + "'";
+            var cmd = new SqlCommand(strSQL, SqlConn);
+            var ds = new DataSet();
+            var da = new SqlDataAdapter(cmd);
+
+            SqlConn.Open();
+            da.Fill(ds, "carritos");
+            SqlConn.Close();
+
+            gvCarrito.DataSource = ds;
+            gvCarrito.DataBind();
+        }
+
+        protected void btnEliminarP_Click(object sender, EventArgs e)
+        {
+            Button agregar = (Button)sender;
+            DataControlFieldCell fila = (DataControlFieldCell)agregar.Parent;
+
+            Label producto = (Label)fila.Controls[1];
+
+            var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var strSQL = "DELETE FROM [dbo].[CARRITOS]  WHERE KF_Productosid ='" + producto.Text + "'";
+            var cmd = new SqlCommand(strSQL, SqlConn);
+
+            SqlConn.Open();
+            cmd.ExecuteNonQuery();
+            SqlConn.Close();
+            MostrarCarrito();
+        }
+
+        private void AumentarCarrito()
+        {
+            int ncarro = carrito;
+            ncarro++;
+            carrito = ncarro;
+            Response.Write(carrito.ToString());
+        }
+
+        protected void BtnPedido_Click(object sender, EventArgs e)
+        {
+            //string KF_carritoid = "";
+            //DateTime fecha = DateTime.Now;
+
+            //var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            //var strSQL = "INSERT INTO [dbo].[PQR] VALUES (NEWID(),'" + fecha + "','" + noHistorial + "','" + KF_carritoid + " ')";
+            //var cmd = new SqlCommand(strSQL, SqlConn);
+
+            //SqlConn.Open();
+            //cmd.ExecuteNonQuery();
+            //SqlConn.Close();
+
+            CapNumeroCarrito();
+
+            AumentarCarrito();
+
+            MostrarCarrito();
+        }
+
+        private void CapNumeroCarrito()
+        {
+            var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var sqlQuery = "Select MAX(NoCarrito) from CARRITOS where KF_Usuarioid = '" + Session["IdUsuario"] + "'";
+            var cmd = new SqlCommand(sqlQuery, sqlcon);
+            sqlcon.Open();
+            try
+            {
+                carrito = int.Parse(Convert.ToString(cmd.ExecuteScalar()).ToUpper());
+            }
+            catch (Exception)
+            {
+
+            }
+
+
+
+            cmd.ExecuteNonQuery();
+            sqlcon.Close();
         }
     }
 }

@@ -71,6 +71,7 @@
     <Content Include="bootstrap-4.0.0-dist\js\jquery-3.6.0.min.js" />
     <Content Include="bootstrap-4.0.0-dist\js\popper.min.js" />
     <Content Include="Css\StyleSheet1.css" />
+    <Content Include="imagenes\ Paracetamol - copia.jpg" />
     <Content Include="imagenes\certificado.png" />
     <Content Include="imagenes\drogeria.jpg" />
     <Content Include="imagenes\farmacia %281%29.png" />
@@ -88,7 +89,11 @@
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.bundle.min.js.map" />
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.js.map" />
     <Content Include="bootstrap-4.0.0-dist\js\bootstrap.min.js.map" />
+    <Content Include="imagenes\Nazil.jpg" />
+    <Content Include="imagenes\Paracetamol.jpg" />
+    <Content Include="imagenes\privatos.jpg" />
     <Content Include="imagenes\responsabilidad.png" />
+    <Content Include="imagenes\VitaminaCgomitas.jpg" />
     <Content Include="JavaScript\JavaScript.js" />
     <Content Include="Masterpage\MasterPrincipal.Master" />
     <Content Include="Masterpage\masterEntrada.Master" />

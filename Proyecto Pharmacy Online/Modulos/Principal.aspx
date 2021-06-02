@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masterpage/MasterPrincipal.Master" AutoEventWireup="true" CodeBehind="Principal.aspx.cs" Inherits="Proyecto_Pharmacy_Online.Modulos.WebForm3" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masterpage/MasterPrincipal.Master" AutoEventWireup="true" CodeBehind="Principal.aspx.cs" Inherits="Proyecto_Pharmacy_Online.Modulos.WebForm3" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -15,7 +15,7 @@
     <!--Barra de navegacion-->
     <div class="bg-success m-0 p-0 fijado-arriba">
         <div class="row">
-            <div class="col-lg-8 col-sm-0"></div>
+            <div class="col-lg-8 col-0"></div>
             <div class="col-lg-4 col-sm-12">
                 <!--Barra de navegación-->
                 <nav class="navbar navbar-expand-lg navbar-light bg-success py-0">
@@ -51,11 +51,11 @@
         <!--Ventana de Productos-->
         <asp:View ID="View1" runat="server">
             <div class="col-12 mt-5 px-5">
-                <div class="row text-center">
+                <%--<div class="row text-center">
                     <div class="col-12">
                         <p class="subtitulo-informacion">Productos</p>
                     </div>
-                </div>
+                </div>--%>
                 <!--Busuqeda de Productos-->
                 <asp:MultiView ID="MultiView2" runat="server">
                     <!--Ventana de Usuarios-->
@@ -81,42 +81,67 @@
                                         </div>
                                         <div class="col-6">
                                             <p class="subtitulo-registro d-inline">Categoria:</p>
-                                            <asp:RadioButton ID="rbVentaLibre" runat="server" Text="Venta Libre" GroupName="Categoria" class="subtitulo-registro ml-3" />
-                                            <asp:RadioButton ID="rbPrescripcion" runat="server" Text="Prescripcion" GroupName="Categoria" class="subtitulo-registro ml-3" />
+                                            <asp:RadioButton ID="rbVentaLibre" runat="server" Text="  Venta Libre" GroupName="Categoria" class="subtitulo-registro ml-3" />
+                                            <asp:RadioButton ID="rbPrescripcion" runat="server" Text="  Prescripcion" GroupName="Categoria" class="subtitulo-registro ml-3" />
+                                            <asp:RadioButton ID="rbSinCategoria" runat="server" Text="  Sin Categoria" GroupName="Categoria" class="subtitulo-registro ml-3" Checked="True" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-1"></div>
                             </div>
                         </div>
-                        <div class="mx-5 px-5">
-                            <div class="row">
-                                <div class="bg-success px-3">
-                                    <asp:DataList ID="DataList1" runat="server" RepeatColumns="2">
-                                        <ItemTemplate>
-                                            <div class="subtitulo-registro d-inline">
-                                                <asp:Label ID="Label11" runat="server" Text="Nombre:"></asp:Label>
-                                            </div>
-                                            <asp:Label ID="Label6" runat="server" Text='<%# Eval("NombreP") %>'></asp:Label>
-                                            <div class="subtitulo-registro">
-                                                <asp:Label ID="Label2" runat="server" Text="Descripcion:"></asp:Label>
-                                            </div>
-                                            <asp:Label ID="Label7" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                            <div class="subtitulo-registro">
-                                                <asp:Label ID="Label3" runat="server" Text="Cantidad:"></asp:Label>
-                                            </div>
-                                            <asp:Label ID="Label8" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
-                                            <div class="subtitulo-registro">
-                                                <asp:Label ID="Label4" runat="server" Text="precio:"></asp:Label>
-                                            </div>
-                                            <asp:Label ID="Label9" runat="server" Text='<%# Eval("Precio") %>'></asp:Label>
-                                            <div class="subtitulo-registro">
-                                                <asp:Label ID="Label5" runat="server" Text="Categoria:"></asp:Label>
-                                            </div>
-                                            <asp:Label ID="Label10" runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
-                                            <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-productos" />
-                                        </ItemTemplate>
-                                    </asp:DataList>
+                        <div class="">
+                            <div class="row justify-content-center">
+                                <div class="col-10">
+                                    <div class="">
+                                        <asp:DataList ID="DataList1" runat="server" RepeatColumns="5">
+                                            <ItemTemplate>
+                                                <div class="m-1 p-3 card-producto text-center info-display">
+                                                    <div class="text-center" style="height: 250px !important">
+                                                        <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-productos d-flex align-items-center" />
+                                                    </div>
+                                                    <div class="dropdown-divider"></div>
+                                                    <%--<div class="subtitulo-registro d-inline">
+                                                        <asp:Label ID="Label11" runat="server" Text="Nombre:"></asp:Label>
+                                                    </div>--%>
+                                                    <div class="text-center text-capitalize">
+                                                        <asp:Label ID="Label6" runat="server" Text='<%# Eval("NombreP") %>' CssClass="subtitulo-registro"></asp:Label>
+                                                    </div>
+                                                    <%--<div class="subtitulo-registro">
+                                                        <asp:Label ID="Label2" runat="server" Text="Descripcion:"></asp:Label>
+                                                    </div>
+                                                    <div style="height: 150px !important">
+                                                        <asp:Label ID="Label7" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                    </div>--%>
+                                                    <div class="subtitulo-registro">
+                                                        <asp:Label ID="Label3" runat="server" Text="Cantidad:"></asp:Label>
+                                                        <asp:Label ID="Label8" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
+                                                    </div>
+
+                                                    <div class="subtitulo-registro">
+                                                        <asp:Label ID="Label4" runat="server" Text="precio: $"></asp:Label>
+                                                        <asp:Label ID="Label9" runat="server" Text='<%# Eval("Precio") %>'></asp:Label>
+                                                    </div>
+                                                    <div class="subtitulo-registro">
+                                                        <asp:Label ID="Label5" runat="server" Text="Categoria:"></asp:Label>
+                                                        <asp:Label ID="Label10" runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                                    </div>
+                                                    <div class="info-productos">
+                                                        <%--   <div class="align-content-center mb-2">
+                                                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                        </div>--%>
+                                                        <div>
+                                                            <asp:Button ID="BtnEliminarProducto" runat="server" Text="-" class="btn-masmenos" OnClick="BtnEliminarProducto_Click" />
+                                                            <asp:TextBox ID="txtContador" runat="server" CssClass="txt-contador"></asp:TextBox>
+                                                            <asp:Button ID="BtnAñadirProducto" runat="server" Text="+" class="btn-masmenos" OnClick="BtnAñadirProducto_Click" />
+
+                                                            <asp:Button ID="BtnAñadiralCarrito" runat="server" Text="Añadir al Carrito" class="btn-añadirCarrito" OnClick="BtnAñadiralCarrito_Click" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:DataList>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,18 +154,38 @@
                                     <p class="subtitulo-informacion">Agregar Productos</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="">
-                                    <asp:TextBox ID="txtNombreProducto" runat="server" placeholder="nombre"></asp:TextBox>
-                                    <asp:TextBox ID="txtDescripcion" runat="server" placeholder="descripción"></asp:TextBox>
-                                    <asp:TextBox ID="txtPrecio" runat="server" placeholder="precio"></asp:TextBox>
-                                    <asp:TextBox ID="txtCantidad" runat="server" placeholder="cantidad"></asp:TextBox>
-                                    <p>En venta</p>
-                                    <asp:RadioButton ID="rbPrescripcionregistro" runat="server" GroupName="EnVenta" Text="Si" />
-                                    <asp:RadioButton ID="rbVentaLibreregistro" runat="server" GroupName="EnVenta" Text="No" />
+                            <div class="row mx-5 mt-5 text-center just parrafo-informacion">
+                                <div class="col-lg-3 col-md-12 mb-3">
+                                    <a class="parrafo-informacion">Nombre:</a>
+                                    <asp:TextBox ID="txtNombreProducto" runat="server" placeholder="max 20 caracteres" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-3 col-md-12 mb-3">
+                                    <a class="parrafo-informacion">Precio:</a>
+                                    <asp:TextBox ID="txtPrecio" runat="server" placeholder="$" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-2 col-md-12 mb-3">
+                                    <a class="parrafo-informacion">Cantidad:</a>
+                                    <asp:TextBox ID="txtCantidad" runat="server" placeholder="" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-3 col-md-12 mb-3">
+                                    <a class="parrafo-informacion">Categoria:</a>
+                                    <asp:RadioButton ID="rbPrescripcionregistro" runat="server" GroupName="EnVenta" Text="Prescripcion" />
+                                    <asp:RadioButton ID="rbVentaLibreregistro" runat="server" GroupName="EnVenta" Text="Venta Libre" Checked="True" />
+                                </div>
+                            </div>
+                            <div class="row mx-5 mt-2 text-center">
+                                <div class="col-lg-6 col-md-12 mb-3">
+                                    <a class="parrafo-informacion">Descripcion</a>
+                                    <asp:TextBox ID="txtDescripcion" runat="server" placeholder="descripción" CssClass="form-control txt-descripcion" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-6 col-md-12 mb-4">
                                     <asp:FileUpload ID="FileUploadImagen" runat="server" />
-                                    <asp:Button ID="btnSubir" runat="server" Text="subir producto" OnClick="BtnSubir_Click" />
-                                    <asp:Image ID="imgVistaPrevia" runat="server" css="imagen" />
+                                    <asp:Image ID="imgVistaPrevia" runat="server" class="imagenprevia" />
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                                <div class="col-12 text-center mt-5">
+                                    <asp:Button ID="btnSubir" runat="server" Text="subir producto" OnClick="BtnSubir_Click" class="btn btn-info btn-cerrar" />
                                 </div>
                             </div>
                         </div>
@@ -150,9 +195,98 @@
         </asp:View>
         <!--Ventana de Carrito-->
         <asp:View ID="View2" runat="server">
-            <div class="container col-12">
-                <p>productos seleccionados</p>
-                <p>realizar compra</p>
+            <div class="container col-12 mt-3">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="subtitulo-informacion">Carrito</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-7 text-center datos-usuario">
+                        <asp:GridView ID="gvCarrito" runat="server" AutoGenerateColumns="False" CellPadding="3" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Producto">
+                                    <ItemTemplate>
+                                        <div class="px-2 py-2">
+                                            <asp:Label ID="Label31" runat="server" Text='<%# Eval("NombreP") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cantidad">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label32" runat="server" Text='<%# Eval("CantProductosComprados") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio Unidad">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label33" runat="server" Text='<%# Eval("Precio") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio Total">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label34" runat="server" Text='<%# Eval("PrecioTPdtsComprados") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Categoria">
+                                    <ItemTemplate>
+                                        <div class="px-4 py-2">
+                                            <asp:Label ID="Label35" runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No Carito">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label360" runat="server" Text='<%# Eval("NoCarrito") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <%--<asp:TemplateField HeaderText="Imagen">
+                                    <ItemTemplate>
+                                        <div class="px-2">
+                                            <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-carrito" />
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>--%>
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <div class="px-2">
+                                            <asp:Label ID="Label36" runat="server" Text='<%# Eval("KF_Productosid") %>' Visible="False"></asp:Label>
+                                            <asp:Button ID="btnEliminarP" runat="server" Text="Eliminar" class="btn-eliminardelcarrito" OnClick="btnEliminarP_Click" />
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="White" ForeColor="#000066" />
+                            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                            <RowStyle ForeColor="#000066" />
+                            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                            <SortedDescendingHeaderStyle BackColor="#00547E" />
+                        </asp:GridView>
+                    </div>
+                </div>
+                <div class="row mt-5 justify-content-center mb-5">
+                    <div class="col-6">
+                        <div class="row justify-content-between">
+                            <div class="col-3">
+                                <a class="subtitulo-usuario">Valor Total:</a>
+                            </div>
+                             <div class="col-3">
+                                 <asp:Button ID="btnPedido" runat="server" Text="Realizar Compra" CssClass="btn-Pedido btn btn-info btn-cerrar m-0" OnClick="BtnPedido_Click" />
+                             </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </asp:View>
         <!--Ventana de Usuario-->
@@ -166,61 +300,61 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-lg-5 col-sm-10">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-4 col-sm-10">
                             <div class="text-left px-auto">
                                 <asp:GridView ID="gvInfoUsuario" runat="server" AutoGenerateColumns="False" ShowHeader="False" class="col-12" BorderWidth="0">
                                     <Columns>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <div class="text-center">
+                                                <div class="text-left" style="font-size: 20px">
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-4">
                                                             <asp:Label ID="Label12" runat="server" Text="Nombre : " CssClass="subtitulo-usuario"></asp:Label>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-8">
                                                             <asp:Label ID="Label13" runat="server" Text='<%# Eval("nombre") %> ' CssClass="datos-usuario"></asp:Label>
                                                         </div>
                                                     </div>
                                                     <div class="row py-2">
-                                                        <div class="col-6">
+                                                        <div class="col-4">
                                                             <asp:Label ID="Label1" runat="server" Text="Apellido : " CssClass="subtitulo-usuario"></asp:Label>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-8">
                                                             <asp:Label ID="Label14" runat="server" Text='<%# Eval("apellido") %> ' CssClass="datos-usuario"></asp:Label>
                                                         </div>
                                                     </div>
                                                     <div class="row py-2">
-                                                        <div class="col-6">
+                                                        <div class="col-4">
                                                             <asp:Label ID="Label15" runat="server" Text="Telefono : " CssClass="subtitulo-usuario"></asp:Label>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-8">
                                                             <asp:Label ID="Label16" runat="server" Text='<%# Eval("telefono") %>' CssClass="datos-usuario"></asp:Label>
                                                         </div>
                                                     </div>
                                                     <div class="row py-2">
-                                                        <div class="col-6">
+                                                        <div class="col-4">
                                                             <asp:Label ID="Label17" runat="server" Text="Direccion : " CssClass="subtitulo-usuario"></asp:Label>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-8">
                                                             <asp:Label ID="Label18" runat="server" Text='<%# Eval("direccion") %> ' CssClass="datos-usuario"></asp:Label>
                                                         </div>
                                                     </div>
                                                     <div class="row py-2">
-                                                        <div class="col-6">
+                                                        <div class="col-4">
                                                             <asp:Label ID="Label19" runat="server" Text="Usuario : " CssClass="subtitulo-usuario"></asp:Label>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-8">
                                                             <asp:Label ID="Label20" runat="server" Text='<%# Eval("usuario") %> ' CssClass="datos-usuario"></asp:Label>
                                                         </div>
                                                     </div>
                                                     <div class="row py-2">
-                                                        <div class="col-6">
+                                                        <div class="col-4">
                                                             <asp:Label ID="Label21" runat="server" Text="Correo : " CssClass="subtitulo-usuario"></asp:Label>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-8">
                                                             <asp:Label ID="Label22" runat="server" Text='<%# Eval("correo") %> ' CssClass="datos-usuario"></asp:Label>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </ItemTemplate>
@@ -246,61 +380,107 @@
                         <div class="col-12">
                             <p class="subtitulo-informacion">Peticiones - Quejas - Reclamos</p>
                         </div>
-                        <div class=" col-12">
-                            <!--Ventana multiple PQR-->
-                            <asp:MultiView ID="MultiView3" runat="server">
-                                <!--Ventana Usuario-->
-                                <asp:View ID="View7" runat="server">
-                                    <asp:GridView ID="gvVerPQR" runat="server" AutoGenerateColumns="False">
-                                        <Columns>
-                                            <asp:TemplateField>
-                                                <ItemTemplate>
-                                                    <div>
-                                                        <asp:Label ID="Label23" runat="server" Text="Nombre"></asp:Label>
-                                                    </div>
-                                                    <div>
-                                                        <asp:Label ID="Label24" runat="server" Text='<%# Eval("NombrePQR") %>'></asp:Label>
-                                                    </div>
-                                                    <div>
-                                                        <asp:Label ID="Label25" runat="server" Text="Descripcion"></asp:Label>
-                                                    </div>
-                                                    <div>
-                                                        <asp:Label ID="Label26" runat="server" Text='<%# Eval("DescripcionPQR") %>'></asp:Label>
-                                                    </div>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
-                                </asp:View>
-                                <!---Ventana Administrador-->
-                                <asp:View ID="View8" runat="server" >
-                                    <div class="mt-5">
-                                        <div class="row">
-                                            <div class="col-1"></div>
-                                            <div class="col-10 text-center">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <p>Buscar:</p>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <asp:TextBox ID="txtBuscarPQR" runat="server" placeholder="Inserte Usuario"></asp:TextBox>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <asp:Button ID="BtnBuscarPQR" runat="server" Text="Buscar" OnClick="BtnBuscarPQR_Click" />
-                                                    </div>
+                    </div>
+                    <div class="mt-5">
+                        <!--Ventana multiple PQR-->
+                        <asp:MultiView ID="MultiView3" runat="server">
+                            <!--Ventana Usuario-->
+                            <asp:View ID="View7" runat="server">
+                                <asp:GridView ID="gvVerPQR" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <div>
+                                                    <asp:Label ID="Label23" runat="server" Text="Nombre"></asp:Label>
+                                                </div>
+                                                <div>
+                                                    <asp:Label ID="Label24" runat="server" Text='<%# Eval("NombrePQR") %>'></asp:Label>
+                                                </div>
+                                                <div>
+                                                    <asp:Label ID="Label25" runat="server" Text="Descripcion"></asp:Label>
+                                                </div>
+                                                <div>
+                                                    <asp:Label ID="Label26" runat="server" Text='<%# Eval("DescripcionPQR") %>'></asp:Label>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                                <!--Insertar una nueva PQR-->
+                                <div class="row justify-content-center">
+                                    <div class="col-2">
+                                        <p>Motivo:</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <asp:TextBox ID="txtNombrePqr" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-2">
+                                        <p>Descripcion:</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <asp:TextBox ID="txtDescripcionPQR" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-2 text-center">
+                                        <asp:Button ID="BtnSubirPQR" runat="server" Text="Enviar" OnClick="BtnSubirPQR_Click" />
+                                    </div>
+                                </div>
+                            </asp:View>
+                            <!---Ventana Administrador-->
+                            <asp:View ID="View8" runat="server">
+                                <div class="mt-5">
+                                    <div class="row">
+                                        <div class="col-1"></div>
+                                        <div class="col-10 text-center">
+                                            <div class="row justify-content-center">
+                                                <div class="col-1">
+                                                    <p class="subtitulo-registro">Buscar:</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <asp:TextBox ID="txtBuscarPQR" runat="server" placeholder="Inserte Usuario" class="form-control textbox-inicio"></asp:TextBox>
+                                                </div>
+                                                <div class="col-1">
+                                                    <asp:Button ID="BtnBuscarPQR" runat="server" Text="Buscar" OnClick="BtnBuscarPQR_Click" class="btn btn-info btn-cerrar mt-0" />
                                                 </div>
                                             </div>
-                                            <div class="col-1"></div>
                                         </div>
-                                        <div class="row justify-content-center">
-                                            <div class="col-8">
-                                                <asp:GridView ID="gvBuscarPQR" runat="server"></asp:GridView>
-                                            </div>
+                                        <div class="col-1"></div>
+                                    </div>
+                                    <div class="row justify-content-center mt-5 mb-5">
+                                        <div class="col-8 text-center">
+                                            <asp:GridView ID="gvBuscarPQR" runat="server" AutoGenerateColumns="False" class=" m-auto">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="Usuario">
+                                                        <ItemTemplate>
+                                                            <div class="p-3">
+                                                                <asp:Label ID="Label28" runat="server" Text='<%# Eval("nombre") %>'></asp:Label>
+                                                            </div>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Motivo">
+                                                        <ItemTemplate>
+                                                            <div class="p-3">
+                                                                <asp:Label ID="Label28" runat="server" Text='<%# Eval("NombrePQR") %>'></asp:Label>
+                                                            </div>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Descripcion">
+                                                        <ItemTemplate>
+                                                            <div class="p-3">
+                                                                <asp:Label ID="Label30" runat="server" Text='<%# Eval("DescripcionPQR") %>'></asp:Label>
+                                                            </div>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                            </asp:GridView>
                                         </div>
                                     </div>
-                                </asp:View>
-                            </asp:MultiView>
-                        </div>
+                                </div>
+                            </asp:View>
+                        </asp:MultiView>
                     </div>
                 </div>
             </div>
