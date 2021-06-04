@@ -191,8 +191,8 @@
 }
 
 .validadores {
-    color: #820000;
-    font-size: 17px;
+    color: #350101;
+    font-size: 20px;
 }
 
 .titulo-informacion {
@@ -292,6 +292,17 @@
     .btn-añadirCarrito:hover {
         background: rgba(48, 233, 86, 0.79);
     }
+.btn-eliminarAdmin {
+    font-size: 20px;
+    height: 40px;
+    width: 200px;
+    background: rgba(193, 38, 38, 0.70);
+    border-radius: 12px;
+}
+
+    .btn-eliminarAdmin:hover {
+        background: rgb(183, 22, 22);
+    }
 
 /*.txt-descripcion{
     height:100%;
@@ -326,3 +337,4 @@
 .btn-Pedido:hover {
 
 }
+ 

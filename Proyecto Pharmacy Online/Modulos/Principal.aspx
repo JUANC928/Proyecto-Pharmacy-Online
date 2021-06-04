@@ -107,6 +107,7 @@
                                                     <div class="text-center text-capitalize">
                                                         <asp:Label ID="Label6" runat="server" Text='<%# Eval("NombreP") %>' CssClass="subtitulo-registro"></asp:Label>
                                                     </div>
+                                                    <div class="dropdown-divider"></div>
                                                     <%--<div class="subtitulo-registro">
                                                         <asp:Label ID="Label2" runat="server" Text="Descripcion:"></asp:Label>
                                                     </div>
@@ -126,14 +127,15 @@
                                                         <asp:Label ID="Label5" runat="server" Text="Categoria:"></asp:Label>
                                                         <asp:Label ID="Label10" runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
                                                     </div>
+                                                    <div class="dropdown-divider"></div>
                                                     <div class="info-productos">
                                                         <%--   <div class="align-content-center mb-2">
                                                             <asp:Label ID="Label2" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
                                                         </div>--%>
                                                         <div>
-                                                            <asp:Button ID="BtnEliminarProducto" runat="server" Text="-" class="btn-masmenos" OnClick="BtnEliminarProducto_Click" />
-                                                            <asp:TextBox ID="txtContador" runat="server" CssClass="txt-contador"></asp:TextBox>
-                                                            <asp:Button ID="BtnAñadirProducto" runat="server" Text="+" class="btn-masmenos" OnClick="BtnAñadirProducto_Click" />
+                                                            <%--<asp:Button ID="BtnEliminarProducto" runat="server" Text="-" class="btn-masmenos" OnClick="BtnEliminarProducto_Click" />--%>
+                                                            <asp:TextBox ID="txtContador" runat="server" CssClass="txt-contador d-block mx-auto" Text="1"></asp:TextBox>
+                                                            <%--<asp:Button ID="BtnAñadirProducto" runat="server" Text="+" class="btn-masmenos" OnClick="BtnAñadirProducto_Click" />--%>
 
                                                             <asp:Button ID="BtnAñadiralCarrito" runat="server" Text="Añadir al Carrito" class="btn-añadirCarrito" OnClick="BtnAñadiralCarrito_Click" />
                                                         </div>
@@ -152,6 +154,11 @@
                             <div class="row text-center">
                                 <div class="col-12">
                                     <p class="subtitulo-informacion">Agregar Productos</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-center">
+                                    <asp:Label ID="lbproductoexiste" runat="server" Text="El producto ya existe" Visible="False"></asp:Label>
                                 </div>
                             </div>
                             <div class="row mx-5 mt-5 text-center just parrafo-informacion">
@@ -184,9 +191,62 @@
                                 </div>
                             </div>
                             <div class="row my-5">
-                                <div class="col-12 text-center mt-5">
+                                <div class="col-12 text-center mt-1">
                                     <asp:Button ID="btnSubir" runat="server" Text="subir producto" OnClick="BtnSubir_Click" class="btn btn-info btn-cerrar" />
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-10">
+                                <asp:DataList ID="dtProductosAdmin" runat="server" RepeatColumns="5">
+                                    <ItemTemplate>
+                                        <div class="m-1 p-3 card-producto text-center info-display">
+                                            <div class="text-center" style="height: 250px !important">
+                                                <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-productos d-flex align-items-center" />
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <%--<div class="subtitulo-registro d-inline">
+                                                        <asp:Label ID="Label11" runat="server" Text="Nombre:"></asp:Label>
+                                                    </div>--%>
+                                            <div class="text-center text-capitalize">
+                                                <asp:Label ID="Labe1l6" runat="server" Text='<%# Eval("NombreP") %>' CssClass="subtitulo-registro"></asp:Label>
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <%--<div class="subtitulo-registro">
+                                                        <asp:Label ID="Label2" runat="server" Text="Descripcion:"></asp:Label>
+                                                    </div>
+                                                    <div style="height: 150px !important">
+                                                        <asp:Label ID="Label7" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                    </div>--%>
+                                            <div class="subtitulo-registro">
+                                                <asp:Label ID="Labe1l3" runat="server" Text="Cantidad:"></asp:Label>
+                                                <asp:Label ID="Labe1l8" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
+                                            </div>
+
+                                            <div class="subtitulo-registro">
+                                                <asp:Label ID="Labe1l4" runat="server" Text="precio: $"></asp:Label>
+                                                <asp:Label ID="Labe1l9" runat="server" Text='<%# Eval("Precio") %>'></asp:Label>
+                                            </div>
+                                            <div class="subtitulo-registro">
+                                                <asp:Label ID="Label15" runat="server" Text="Categoria:"></asp:Label>
+                                                <asp:Label ID="Label110" runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <div class="info-productos">
+                                                <%--   <div class="align-content-center mb-2">
+                                                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                        </div>--%>
+                                                <div>
+                                                    <%--<asp:Button ID="BtnEliminarProducto" runat="server" Text="-" class="btn-masmenos" OnClick="BtnEliminarProducto_Click" />--%>
+                                                    <%--<asp:TextBox ID="txtContador" runat="server" CssClass="txt-contador d-block mx-auto" Text="1"></asp:TextBox>--%>
+                                                    <%--<asp:Button ID="BtnAñadirProducto" runat="server" Text="+" class="btn-masmenos" OnClick="BtnAñadirProducto_Click" />--%>
+
+                                                    <asp:Button ID="BtnEliminarstock" runat="server" Text="Eliminar Producto" class="btn-eliminarAdmin" OnClick="BtnEliminarstock_Click" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:DataList>
                             </div>
                         </div>
                     </asp:View>
@@ -202,7 +262,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-7 text-center datos-usuario">
+                    <div class="col-6 text-center datos-usuario">
                         <asp:GridView ID="gvCarrito" runat="server" AutoGenerateColumns="False" CellPadding="3" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                             <Columns>
                                 <asp:TemplateField HeaderText="Producto">
@@ -278,12 +338,13 @@
                 <div class="row mt-5 justify-content-center mb-5">
                     <div class="col-6">
                         <div class="row justify-content-between">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <a class="subtitulo-usuario">Valor Total:</a>
+                                <asp:Label ID="lbValorcompra" runat="server" Text="0" class="subtitulo-usuario"></asp:Label>
                             </div>
-                             <div class="col-3">
-                                 <asp:Button ID="btnPedido" runat="server" Text="Realizar Compra" CssClass="btn-Pedido btn btn-info btn-cerrar m-0" OnClick="BtnPedido_Click" />
-                             </div>
+                            <div class="col-3">
+                                <asp:Button ID="btnPedido" runat="server" Text="Realizar Compra" CssClass="btn-Pedido btn btn-info btn-cerrar m-0" OnClick="BtnPedido_Click" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -366,14 +427,87 @@
                     </div>
                 </div>
                 <!--Historial de Compras-->
-                <div class="mt-5 text-center">
+                <%--<div class="mt-5 text-center">
                     <div class="row">
                         <div class="col-12">
                             <p class="subtitulo-informacion">Historial de compras</p>
                         </div>
-                        <div class=""></div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-6">
+                             <asp:GridView ID="gvHistorial" runat="server" AutoGenerateColumns="False" CellPadding="3" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Producto">
+                                    <ItemTemplate>
+                                        <div class="px-2 py-2">
+                                            <asp:Label ID="Label031" runat="server" Text='<%# Eval("NombreP") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cantidad">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label032" runat="server" Text='<%# Eval("CantProductosComprados") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio Unidad">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label033" runat="server" Text='<%# Eval("Precio") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio Total">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label034" runat="server" Text='<%# Eval("PrecioTPdtsComprados") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Categoria">
+                                    <ItemTemplate>
+                                        <div class="px-4 py-2">
+                                            <asp:Label ID="Label035" runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No Carito">
+                                    <ItemTemplate>
+                                        <div class="px-5 py-2">
+                                            <asp:Label ID="Label0360" runat="server" Text='<%# Eval("NoCarrito") %>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Imagen">
+                                    <ItemTemplate>
+                                        <div class="px-2">
+                                            <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-carrito" />
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <div class="px-2">
+                                            <asp:Label ID="Label036" runat="server" Text='<%# Eval("KF_Productosid") %>' Visible="False"></asp:Label>
+                                            <asp:Button ID="btnEliminarP" runat="server" Text="Eliminar" class="btn-eliminardelcarrito" OnClick="btnEliminarP_Click" />
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="White" ForeColor="#000066" />
+                            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                            <RowStyle ForeColor="#000066" />
+                            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                            <SortedDescendingHeaderStyle BackColor="#00547E" />
+                        </asp:GridView>
+                        </div>
+                    </div>
+                </div>--%>
                 <!--Ingresar Sugerencias-->
                 <div class="mt-5 text-center">
                     <div class="row">
@@ -451,12 +585,12 @@
                                     </div>
                                     <div class="row justify-content-center mt-5 mb-5">
                                         <div class="col-8 text-center">
-                                            <asp:GridView ID="gvBuscarPQR" runat="server" AutoGenerateColumns="False" class=" m-auto">
+                                            <asp:GridView ID="gvBuscarPQR" runat="server" AutoGenerateColumns="False" class=" m-auto" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="Usuario">
                                                         <ItemTemplate>
                                                             <div class="p-3">
-                                                                <asp:Label ID="Label28" runat="server" Text='<%# Eval("nombre") %>'></asp:Label>
+                                                                <asp:Label ID="Label28" runat="server" Text='<%# Eval("usuario") %>'></asp:Label>
                                                             </div>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
@@ -475,6 +609,15 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                 </Columns>
+                                                <FooterStyle BackColor="White" ForeColor="#000066" />
+                                                <HeaderStyle BackColor="#3667D1" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+                                                <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Center" />
+                                                <RowStyle ForeColor="#000066" />
+                                                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                                <SortedDescendingHeaderStyle BackColor="#00547E" />
                                             </asp:GridView>
                                         </div>
                                     </div>

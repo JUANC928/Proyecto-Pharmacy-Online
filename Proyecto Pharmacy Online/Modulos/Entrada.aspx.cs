@@ -59,6 +59,10 @@ namespace Proyecto_Pharmacy_Online.Modulos
             {
                 Response.Redirect("../Modulos/Principal.aspx");
             }
+            else
+            {
+                lbdatosincorrectos.Visible = true;
+            }
         }
 
         /// <summary>

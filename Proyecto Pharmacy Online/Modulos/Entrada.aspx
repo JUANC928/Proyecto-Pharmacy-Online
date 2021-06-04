@@ -62,12 +62,14 @@
                             <!--Entrada Contraseña-->
                             <div class="row mb-5">
                                 <div class="col-6 mx-auto">
+                                    
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Campo Obligatorio" ValidationGroup="obligatorios" ControlToValidate="txtcontraseña" Display="Dynamic" CssClass="validadores"></asp:RequiredFieldValidator>
                                     <asp:TextBox ID="txtContraseña" runat="server" type="password" class="form-control textbox-inicio"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row my-3 text-center">
                                 <div class="col-12">
+                                    <asp:Label ID="lbdatosincorrectos" runat="server" Text="La contraseña o el usuario son incorrectos" Visible="False" class="validadores"></asp:Label>
                                     <asp:Button ID="Button1" runat="server" Text=" Iniciar Sesion" class="btn btn-inicio" OnClick="BtnIniciar_Click" ValidationGroup="obligatorios" />
                                 </div>
                             </div>

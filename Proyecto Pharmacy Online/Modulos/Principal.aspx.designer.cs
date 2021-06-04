@@ -150,6 +150,15 @@ namespace Proyecto_Pharmacy_Online.Modulos
         protected global::System.Web.UI.WebControls.View View6;
 
         /// <summary>
+        /// Control lbproductoexiste.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbproductoexiste;
+
+        /// <summary>
         /// Control txtNombreProducto.
         /// </summary>
         /// <remarks>
@@ -231,6 +240,15 @@ namespace Proyecto_Pharmacy_Online.Modulos
         protected global::System.Web.UI.WebControls.Button btnSubir;
 
         /// <summary>
+        /// Control dtProductosAdmin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataList dtProductosAdmin;
+
+        /// <summary>
         /// Control View2.
         /// </summary>
         /// <remarks>
@@ -247,6 +265,15 @@ namespace Proyecto_Pharmacy_Online.Modulos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvCarrito;
+
+        /// <summary>
+        /// Control lbValorcompra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbValorcompra;
 
         /// <summary>
         /// Control btnPedido.

@@ -78,6 +78,15 @@ namespace Proyecto_Pharmacy_Online.Modulos
         protected global::System.Web.UI.WebControls.TextBox txtContraseña;
 
         /// <summary>
+        /// Control lbdatosincorrectos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbdatosincorrectos;
+
+        /// <summary>
         /// Control Button1.
         /// </summary>
         /// <remarks>
