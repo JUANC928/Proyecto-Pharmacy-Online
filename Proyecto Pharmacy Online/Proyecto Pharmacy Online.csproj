@@ -71,6 +71,9 @@
     <Content Include="bootstrap-4.0.0-dist\js\jquery-3.6.0.min.js" />
     <Content Include="bootstrap-4.0.0-dist\js\popper.min.js" />
     <Content Include="Css\StyleSheet1.css" />
+    <Content Include="imagenes\ Dolexbebes.png" />
+    <Content Include="imagenes\ Panadol.png" />
+    <Content Include="imagenes\ Pedialyte.jpg" />
     <Content Include="imagenes\Curitas.jpg" />
     <Content Include="imagenes\ Paracetamol - copia.jpg" />
     <Content Include="imagenes\certificado.png" />

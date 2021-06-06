@@ -10,19 +10,28 @@ namespace Proyecto_Pharmacy_Online.Modulos
 {
     public partial class WebForm3 : System.Web.UI.Page
     {
-        int carrito;
+
+
+        static int carrito;
         bool firstTimeSession = false;
         bool canSetValue = true;
         //int noHistorial = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             CapVariablesSession();
             if (!IsPostBack)
             {
                 MultiView1.ActiveViewIndex = 0;
                 Session["firstTime"] = true;
-                CapNumeroCarrito();
+                //CapNumeroCarrito();
                 AumentarCarrito();
+            }
+            else
+            {
+                //CapNumeroCarrito();
+                //AumentarCarrito();
+
             }
             try
             {
@@ -48,22 +57,20 @@ namespace Proyecto_Pharmacy_Online.Modulos
                 Console.WriteLine("Tiempo exedido su session se cerro");
             }
 
-            //captura el idUsuario del usuario que inicia session
-            CapVariablesSession();
-            CapNumeroCarrito();
+
 
 
 
             ////easter egg
             if ((bool)Session["firstTime"])
             {
-                AumentarCarrito();
-                Session["firstTime"] = false;
+                //AumentarCarrito();
+                //Session["firstTime"] = false;
                 canSetValue = false;
             }
 
 
-            Response.Write(carrito.ToString());
+            //Response.Write(Session["nocarrito"].ToString());
         }
 
         protected void BtnProductos_Click(object sender, EventArgs e)
@@ -73,12 +80,18 @@ namespace Proyecto_Pharmacy_Online.Modulos
             //AumentarCarrito();
             //Response.Write(carrito.ToString());
             //MostrarProductos();
-            
+
         }
         protected void BtnCarrito_Click(object sender, EventArgs e)
         {
             MultiView1.ActiveViewIndex = 1;
             MostrarCarrito();
+            lbnoproductos.Text = "No se han seleccionado productos";
+            if (gvCarrito.Rows.Count == 0)
+            {
+                btnPedido.Enabled = false;
+                lbnoproductos.Visible = true;
+            }
         }
         protected void BtnUsuario_Click(object sender, EventArgs e)
         {
@@ -109,7 +122,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
         private void MostrarProductos()
         {
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var strSQL = "SELECT * FROM [dbo].[PRODUCTOS]";
+            var strSQL = "SELECT * FROM [dbo].[PRODUCTOS] where Cantidad > 0";
             var cmd = new SqlCommand(strSQL, SqlConn);
 
             var ds = new DataSet();
@@ -227,7 +240,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
                 categoria = "Venta Libre";
             }
             string imgfile = Path.GetFileName(FileUploadImagen.PostedFile.FileName);
-            FileUploadImagen.SaveAs("C: /Users/juand/source/repos/Proyecto Pharmacy Online/Proyecto Pharmacy Online/imagenes/ " + imgfile);
+            FileUploadImagen.SaveAs("C:/Users/juand/source/repos/Proyecto Pharmacy Online/Proyecto Pharmacy Online/imagenes/" + imgfile);
             string url = "~/imagenes/" + imgfile;
             imgVistaPrevia.ImageUrl = url;
 
@@ -413,7 +426,6 @@ namespace Proyecto_Pharmacy_Online.Modulos
             }
             double precioT = double.Parse(precio.Text) * int.Parse(cantidad.Text);
 
-
             var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
             var sqlQuery = "Select Productoid from [dbo].[PRODUCTOS] where nombreP = '" + nombreP.Text + "'";
 
@@ -423,13 +435,51 @@ namespace Proyecto_Pharmacy_Online.Modulos
             cmd.ExecuteNonQuery();
             sqlcon.Close();
 
-            var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var strSQL = "INSERT INTO [dbo].[CARRITOS] VALUES (NEWID(),'" + cantidad.Text + "','" + precioT + "','" + carrito + "','" + Session["productoid"].ToString() + "','" + Session["Idusuario"].ToString() + "')";
-            cmd = new SqlCommand(strSQL, SqlConn);
+            sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            sqlQuery = "Select Cantidad from [dbo].[PRODUCTOS] where Productoid = '" + Session["productoid"] + "'";
 
-            SqlConn.Open();
+            cmd = new SqlCommand(sqlQuery, sqlcon);
+            sqlcon.Open();
+            int cantdisponible = int.Parse(Convert.ToString(cmd.ExecuteScalar()));
             cmd.ExecuteNonQuery();
-            SqlConn.Close();
+            sqlcon.Close();
+
+            if (cantdisponible > int.Parse(cantidad.Text) && int.Parse(cantidad.Text) > 0)
+            {
+                sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+                sqlQuery = "Select Productoid from [dbo].[PRODUCTOS] where nombreP = '" + nombreP.Text + "'";
+
+                cmd = new SqlCommand(sqlQuery, sqlcon);
+                sqlcon.Open();
+                Session["productoid"] = Convert.ToString(cmd.ExecuteScalar());
+                cmd.ExecuteNonQuery();
+                sqlcon.Close();
+
+
+                var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+                var strSQL = "INSERT INTO [dbo].[CARRITOS] VALUES (NEWID(),'" + cantidad.Text + "','" + precioT + "','" + (int)Session["nocarrito"] + "','" + Session["productoid"].ToString() + "','" + Session["Idusuario"].ToString() + "')";
+                cmd = new SqlCommand(strSQL, SqlConn);
+
+                SqlConn.Open();
+                cmd.ExecuteNonQuery();
+                SqlConn.Close();
+
+                SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+                strSQL = "DECLARE @residue INT; set @residue = (SELECT(select Cantidad from PRODUCTOS where Productoid = '" + Session["productoid"] + "') - (select CantProductosComprados from CARRITOS where KF_Productosid = '" + Session["productoid"] + "' and NoCarrito = '" + (int)Session["nocarrito"] + "')); UPDATE[dbo].[PRODUCTOS] SET Cantidad = @residue WHERE Productoid = '" + Session["productoid"] + "' ";
+                cmd = new SqlCommand(strSQL, SqlConn);
+
+                SqlConn.Open();
+                cmd.ExecuteNonQuery();
+                SqlConn.Close();
+                lbnoproductos.Visible = false;
+                btnPedido.Enabled = true;
+                cantnodisp.Visible = false;
+            }
+            else
+            {
+                cantnodisp.Visible = true;
+            }
+            MostrarProductos();
         }
 
 
@@ -478,7 +528,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
             string id = Session["idUsuario"].ToString();
 
-            var strSQL = "SELECT * FROM (([dbo].[CARRITOS] INNER JOIN [dbo].[PRODUCTOS] ON CARRITOS.KF_Productosid = PRODUCTOS.Productoid) INNER JOIN [dbo].[USUARIOS] ON CARRITOS.KF_Usuarioid = USUARIOS.Usuarioid) where KF_Usuarioid = '" + Session["IdUsuario"] + "' AND NoCarrito = '" + carrito + "'";
+            var strSQL = "SELECT * FROM (([dbo].[CARRITOS] INNER JOIN [dbo].[PRODUCTOS] ON CARRITOS.KF_Productosid = PRODUCTOS.Productoid) INNER JOIN [dbo].[USUARIOS] ON CARRITOS.KF_Usuarioid = USUARIOS.Usuarioid) where KF_Usuarioid = '" + Session["IdUsuario"] + "' AND NoCarrito = '" + (int)Session["nocarrito"] + "'";
             var cmd = new SqlCommand(strSQL, SqlConn);
             var ds = new DataSet();
             var da = new SqlDataAdapter(cmd);
@@ -491,7 +541,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
             gvCarrito.DataBind();
 
             var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var sqlQuery = "SELECT SUM(PrecioTPdtsComprados) AS TotalItemsOrdered FROM [dbo].[CARRITOS] WHERE NoCarrito = '" + carrito + "'";
+            var sqlQuery = "SELECT SUM(PrecioTPdtsComprados) AS TotalItemsOrdered FROM [dbo].[CARRITOS] WHERE NoCarrito = '" + (int)Session["nocarrito"] + "'";
             cmd = new SqlCommand(sqlQuery, sqlcon);
             sqlcon.Open();
             try
@@ -516,20 +566,38 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
             Label producto = (Label)fila.Controls[1];
 
+
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var strSQL = "DELETE FROM [dbo].[CARRITOS]  WHERE KF_Productosid ='" + producto.Text + "'";
+            var strSQL = "DECLARE @residue int; set @residue = (SELECT(select Cantidad from PRODUCTOS where Productoid = '" + producto.Text + "') + (select CantProductosComprados from CARRITOS where KF_Productosid = '" + producto.Text + "' and NoCarrito = '" + (int)Session["nocarrito"] + "')); UPDATE[dbo].[PRODUCTOS] SET Cantidad = @residue WHERE Productoid = '" + producto.Text + "'";
             var cmd = new SqlCommand(strSQL, SqlConn);
 
             SqlConn.Open();
             cmd.ExecuteNonQuery();
             SqlConn.Close();
             MostrarCarrito();
+
+            SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            strSQL = "DELETE FROM [dbo].[CARRITOS]  WHERE KF_Productosid ='" + producto.Text + "'";
+            cmd = new SqlCommand(strSQL, SqlConn);
+
+            SqlConn.Open();
+            cmd.ExecuteNonQuery();
+            SqlConn.Close();
+            MostrarCarrito();
+            if (gvCarrito.Rows.Count == 0)
+            {
+                btnPedido.Enabled = false;
+                lbnoproductos.Visible = true;
+            }
+
         }
 
         private void AumentarCarrito()
         {
-            carrito++;
-            Response.Write(carrito.ToString());
+            //carrito++;
+            if (!Session["usuario"].ToString().Equals("admin"))
+                Session["nocarrito"] = (int)Session["nocarrito"] + 1;
+            //Response.Write(carrito.ToString());
         }
 
         protected void BtnPedido_Click(object sender, EventArgs e)
@@ -545,30 +613,13 @@ namespace Proyecto_Pharmacy_Online.Modulos
             //cmd.ExecuteNonQuery();
             //SqlConn.Close();
 
-            CapNumeroCarrito();
+            //CapNumeroCarrito();
 
             AumentarCarrito();
-
             MostrarCarrito();
-        }
-
-        private void CapNumeroCarrito()
-        {
-            var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var sqlQuery = "Select MAX(NoCarrito) from CARRITOS where KF_Usuarioid = '" + Session["IdUsuario"] + "'";
-            var cmd = new SqlCommand(sqlQuery, sqlcon);
-            sqlcon.Open();
-            try
-            {
-                carrito = int.Parse(Convert.ToString(cmd.ExecuteScalar()).ToUpper());
-            }
-            catch (Exception)
-            {
-
-            }
-
-            cmd.ExecuteNonQuery();
-            sqlcon.Close();
+            lbnoproductos.Text = "Compra Realizada con exito";
+            lbnoproductos.Visible = true;
+            btnPedido.Enabled = false;
         }
 
         protected void BtnEliminarstock_Click(object sender, EventArgs e)
@@ -578,9 +629,9 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
             Label nombreP = (Label)fila.Controls[4];
             Label precio = (Label)fila.Controls[13];
-            
+
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            var strSQL = "DELETE FROM [dbo].[PRODUCTOS] WHERE NombreP = '" + nombreP + "'";
+            var strSQL = "DELETE FROM [dbo].[PRODUCTOS] WHERE NombreP = '" + nombreP.Text + "'";
             var cmd = new SqlCommand(strSQL, SqlConn);
 
             SqlConn.Open();
@@ -589,22 +640,5 @@ namespace Proyecto_Pharmacy_Online.Modulos
             MostrarProductosAdmin();
         }
 
-        //private void MostrarHistorial()
-        //{
-        //    var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-        //    string id = Session["idUsuario"].ToString();
-
-        //    var strSQL = "SELECT * FROM (([dbo].[CARRITOS] INNER JOIN [dbo].[PRODUCTOS] ON CARRITOS.KF_Productosid = PRODUCTOS.Productoid) INNER JOIN [dbo].[USUARIOS] ON CARRITOS.KF_Usuarioid = USUARIOS.Usuarioid) where KF_Usuarioid = '" + Session["IdUsuario"]+"'";
-        //    var cmd = new SqlCommand(strSQL, SqlConn);
-        //    var ds = new DataSet();
-        //    var da = new SqlDataAdapter(cmd);
-
-        //    SqlConn.Open();
-        //    da.Fill(ds, "carritos");
-        //    SqlConn.Close();
-
-        //    gvHistorial.DataSource = ds;
-        //    gvHistorial.DataBind();
-        //}
     }
 }

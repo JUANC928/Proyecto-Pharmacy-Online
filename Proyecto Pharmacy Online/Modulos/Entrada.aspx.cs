@@ -57,12 +57,14 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
             if (ds.Tables[0].Rows.Count > 0)
             {
+                CapNumeroCarrito();
                 Response.Redirect("../Modulos/Principal.aspx");
             }
             else
             {
                 lbdatosincorrectos.Visible = true;
             }
+            
         }
 
         /// <summary>
@@ -122,5 +124,35 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
         }
         #endregion
+
+        private void CapNumeroCarrito()
+        {
+
+            var sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+            var sqlQuery = "Select Usuarioid from [dbo].[USUARIOS] where usuario = '" + Session["usuario"] + "'";
+
+            var cmd = new SqlCommand(sqlQuery, sqlcon);
+            sqlcon.Open();
+            Session["IdUsuario"] = Convert.ToString(cmd.ExecuteScalar()).ToUpper();
+            string id = Session["IdUsuario"].ToString();
+            cmd.ExecuteNonQuery();
+
+            sqlcon.Close();
+
+             sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
+             sqlQuery = "Select MAX(NoCarrito) from CARRITOS where KF_Usuarioid = '" + Session["IdUsuario"] + "'";
+             cmd = new SqlCommand(sqlQuery, sqlcon);
+            sqlcon.Open();
+            try
+            {
+                Session["nocarrito"] = int.Parse(Convert.ToString(cmd.ExecuteScalar()).ToUpper());
+            }
+            catch (Exception)
+            {
+
+            }
+            cmd.ExecuteNonQuery();
+            sqlcon.Close();
+        }
     }
 }
