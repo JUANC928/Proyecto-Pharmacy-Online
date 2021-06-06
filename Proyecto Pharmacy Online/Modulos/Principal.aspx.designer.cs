@@ -384,6 +384,15 @@ namespace Proyecto_Pharmacy_Online.Modulos
         protected global::System.Web.UI.WebControls.GridView gvVerPQR;
 
         /// <summary>
+        /// Control RequiredFieldValidator5.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+
+        /// <summary>
         /// Control txtNombrePqr.
         /// </summary>
         /// <remarks>
@@ -391,6 +400,15 @@ namespace Proyecto_Pharmacy_Online.Modulos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombrePqr;
+
+        /// <summary>
+        /// Control RequiredFieldValidator6.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
 
         /// <summary>
         /// Control txtDescripcionPQR.

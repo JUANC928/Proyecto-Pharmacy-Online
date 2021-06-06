@@ -10,12 +10,6 @@ namespace Proyecto_Pharmacy_Online.Modulos
 {
     public partial class WebForm3 : System.Web.UI.Page
     {
-
-
-        static int carrito;
-        bool firstTimeSession = false;
-        bool canSetValue = true;
-        //int noHistorial = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -56,21 +50,6 @@ namespace Proyecto_Pharmacy_Online.Modulos
             {
                 Console.WriteLine("Tiempo exedido su session se cerro");
             }
-
-
-
-
-
-            ////easter egg
-            if ((bool)Session["firstTime"])
-            {
-                //AumentarCarrito();
-                //Session["firstTime"] = false;
-                canSetValue = false;
-            }
-
-
-            //Response.Write(Session["nocarrito"].ToString());
         }
 
         protected void BtnProductos_Click(object sender, EventArgs e)
@@ -189,6 +168,11 @@ namespace Proyecto_Pharmacy_Online.Modulos
                 categoria = "Prescripcion";
                 strSQL = "SELECT * FROM [dbo].[PRODUCTOS] Where NombreP = '" + busqueda + "' and Categoria = '" + categoria + "'";
             }
+            if (!busqueda.Equals(""))
+            {
+                categoria = "Venta Libre";
+                strSQL = "SELECT * FROM [dbo].[PRODUCTOS] Where NombreP = '" + busqueda + "' and Categoria = '" + categoria + "'";
+            }
             if (rbVentaLibre.Checked && !busqueda.Equals(""))
             {
                 categoria = "Venta Libre";
@@ -209,7 +193,6 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
             }
             SqlConn.Close();
-
             DataList1.DataSource = ds;
             DataList1.DataBind();
 
@@ -443,9 +426,11 @@ namespace Proyecto_Pharmacy_Online.Modulos
             int cantdisponible = int.Parse(Convert.ToString(cmd.ExecuteScalar()));
             cmd.ExecuteNonQuery();
             sqlcon.Close();
-
+            
+            
             if (cantdisponible > int.Parse(cantidad.Text) && int.Parse(cantidad.Text) > 0)
             {
+
                 sqlcon = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
                 sqlQuery = "Select Productoid from [dbo].[PRODUCTOS] where nombreP = '" + nombreP.Text + "'";
 
@@ -474,10 +459,13 @@ namespace Proyecto_Pharmacy_Online.Modulos
                 lbnoproductos.Visible = false;
                 btnPedido.Enabled = true;
                 cantnodisp.Visible = false;
+                agregar.Enabled = false;
+
             }
             else
             {
                 cantnodisp.Visible = true;
+
             }
             MostrarProductos();
         }
@@ -565,6 +553,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
             DataControlFieldCell fila = (DataControlFieldCell)agregar.Parent;
 
             Label producto = (Label)fila.Controls[1];
+            Label carrito = (Label)fila.Controls[3];
 
 
             var SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
@@ -577,7 +566,7 @@ namespace Proyecto_Pharmacy_Online.Modulos
             MostrarCarrito();
 
             SqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlconnection"].ConnectionString);
-            strSQL = "DELETE FROM [dbo].[CARRITOS]  WHERE KF_Productosid ='" + producto.Text + "'";
+            strSQL = "DELETE FROM [dbo].[CARRITOS]  WHERE Carritoid ='" + carrito.Text + "'";
             cmd = new SqlCommand(strSQL, SqlConn);
 
             SqlConn.Open();
@@ -594,10 +583,8 @@ namespace Proyecto_Pharmacy_Online.Modulos
 
         private void AumentarCarrito()
         {
-            //carrito++;
             if (!Session["usuario"].ToString().Equals("admin"))
                 Session["nocarrito"] = (int)Session["nocarrito"] + 1;
-            //Response.Write(carrito.ToString());
         }
 
         protected void BtnPedido_Click(object sender, EventArgs e)

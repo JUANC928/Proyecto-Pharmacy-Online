@@ -51,11 +51,6 @@
         <!--Ventana de Productos-->
         <asp:View ID="View1" runat="server">
             <div class="col-12 mt-5 px-5">
-                <%--<div class="row text-center">
-                    <div class="col-12">
-                        <p class="subtitulo-informacion">Productos</p>
-                    </div>
-                </div>--%>
                 <!--Busuqeda de Productos-->
                 <asp:MultiView ID="MultiView2" runat="server">
                     <!--Ventana de Usuarios-->
@@ -106,19 +101,10 @@
                                                         <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-productos d-flex align-items-center" />
                                                     </div>
                                                     <div class="dropdown-divider"></div>
-                                                    <%--<div class="subtitulo-registro d-inline">
-                                                        <asp:Label ID="Label11" runat="server" Text="Nombre:"></asp:Label>
-                                                    </div>--%>
                                                     <div class="text-center text-capitalize">
                                                         <asp:Label ID="Label6" runat="server" Text='<%# Eval("NombreP") %>' CssClass="subtitulo-registro"></asp:Label>
                                                     </div>
                                                     <div class="dropdown-divider"></div>
-                                                    <%--<div class="subtitulo-registro">
-                                                        <asp:Label ID="Label2" runat="server" Text="Descripcion:"></asp:Label>
-                                                    </div>
-                                                    <div style="height: 150px !important">
-                                                        <asp:Label ID="Label7" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                                    </div>--%>
                                                     <div class="subtitulo-registro">
                                                         <asp:Label ID="Label3" runat="server" Text="Cantidad:"></asp:Label>
                                                         <asp:Label ID="Label8" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
@@ -134,13 +120,8 @@
                                                     </div>
                                                     <div class="dropdown-divider"></div>
                                                     <div class="info-productos">
-                                                        <%--   <div class="align-content-center mb-2">
-                                                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                                        </div>--%>
                                                         <div>
-                                                            <%--<asp:Button ID="BtnEliminarProducto" runat="server" Text="-" class="btn-masmenos" OnClick="BtnEliminarProducto_Click" />--%>
-                                                            <asp:TextBox ID="txtContador"  type="number" runat="server" CssClass="txt-contador d-block mx-auto" Text="1"></asp:TextBox>
-                                                            <%--<asp:Button ID="BtnAñadirProducto" runat="server" Text="+" class="btn-masmenos" OnClick="BtnAñadirProducto_Click" />--%>
+                                                            <asp:TextBox ID="txtContador" type="number" runat="server" CssClass="txt-contador d-block mx-auto" Text="1"></asp:TextBox>
                                                             <asp:Button ID="BtnAñadiralCarrito" runat="server" Text="Añadir al Carrito" class="btn-añadirCarrito" OnClick="BtnAñadiralCarrito_Click" ValidationGroup="añadir" />
                                                         </div>
                                                     </div>
@@ -230,19 +211,10 @@
                                                 <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Foto") %>' class="imagen-productos d-flex align-items-center" />
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <%--<div class="subtitulo-registro d-inline">
-                                                        <asp:Label ID="Label11" runat="server" Text="Nombre:"></asp:Label>
-                                                    </div>--%>
                                             <div class="text-center text-capitalize">
                                                 <asp:Label ID="Labe1l6" runat="server" Text='<%# Eval("NombreP") %>' CssClass="subtitulo-registro"></asp:Label>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <%--<div class="subtitulo-registro">
-                                                        <asp:Label ID="Label2" runat="server" Text="Descripcion:"></asp:Label>
-                                                    </div>
-                                                    <div style="height: 150px !important">
-                                                        <asp:Label ID="Label7" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                                    </div>--%>
                                             <div class="subtitulo-registro">
                                                 <asp:Label ID="Labe1l3" runat="server" Text="Cantidad:"></asp:Label>
                                                 <asp:Label ID="Labe1l8" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
@@ -258,14 +230,7 @@
                                             </div>
                                             <div class="dropdown-divider"></div>
                                             <div class="info-productos">
-                                                <%--   <div class="align-content-center mb-2">
-                                                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                                        </div>--%>
                                                 <div>
-                                                    <%--<asp:Button ID="BtnEliminarProducto" runat="server" Text="-" class="btn-masmenos" OnClick="BtnEliminarProducto_Click" />--%>
-                                                    <%--<asp:TextBox ID="txtContador" runat="server" CssClass="txt-contador d-block mx-auto" Text="1"></asp:TextBox>--%>
-                                                    <%--<asp:Button ID="BtnAñadirProducto" runat="server" Text="+" class="btn-masmenos" OnClick="BtnAñadirProducto_Click" />--%>
-
                                                     <asp:Button ID="BtnEliminarstock" runat="server" Text="Eliminar Producto" class="btn-eliminarAdmin" OnClick="BtnEliminarstock_Click" />
                                                 </div>
                                             </div>
@@ -330,17 +295,11 @@
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <%--<asp:TemplateField HeaderText="No Carito">
-                                    <ItemTemplate>
-                                        <div class="px-5 py-2">
-                                            <asp:Label ID="Label360" runat="server" Text='<%# Eval("NoCarrito") %>'></asp:Label>
-                                        </div>
-                                    </ItemTemplate>
-                                </asp:TemplateField>--%>
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
                                         <div class="px-2">
                                             <asp:Label ID="Label36" runat="server" Text='<%# Eval("KF_Productosid") %>' Visible="False"></asp:Label>
+                                            <asp:Label ID="Label02" runat="server" Text='<%# Eval("Carritoid") %>' Visible="False"></asp:Label>
                                             <asp:Button ID="btnEliminarP" runat="server" Text="Eliminar" class="btn-eliminardelcarrito" OnClick="btnEliminarP_Click" />
                                         </div>
                                     </ItemTemplate>
@@ -569,7 +528,8 @@
                                         <p class="parrafo-informacion">Motivo:</p>
                                     </div>
                                     <div class="col-4">
-                                        <asp:TextBox ID="txtNombrePqr" runat="server" placeholder="max 20 caracteres" CssClass="txt-motivo"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Campo Obligatorio" ControlToValidate="txtNombrePqr" ValidationGroup="pqr" CssClass="validadores" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtNombrePqr" runat="server" placeholder="Escriba el motivo del mensaje" CssClass="txt-motivo"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
@@ -577,12 +537,13 @@
                                         <p class="parrafo-informacion">Descripcion:</p>
                                     </div>
                                     <div class="col-4">
-                                        <asp:TextBox ID="txtDescripcionPQR" runat="server" placeholder="max 100 caracteres" CssClass="txt-descripcion" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Campo Obligatorio" ControlToValidate="txtDescripcionPQR" ValidationGroup="pqr" CssClass="validadores" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtDescripcionPQR" runat="server" placeholder="Describa detalladamente lo ocurrido" CssClass="txt-descripcion" TextMode="MultiLine"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="col-2 text-center">
-                                        <asp:Button ID="BtnSubirPQR" runat="server" Text="Enviar" OnClick="BtnSubirPQR_Click" />
+                                        <asp:Button ID="BtnSubirPQR" runat="server" Text="Enviar" OnClick="BtnSubirPQR_Click" class="btn-Pedido btn btn-info btn-cerrar" ValidationGroup="pqr" />
                                     </div>
                                 </div>
                             </asp:View>
